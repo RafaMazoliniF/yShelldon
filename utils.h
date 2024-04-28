@@ -4,6 +4,7 @@ void clearScreen() {
 }
 
 //Print the default user format
-void printUserFormat() {
+void printUserFormat(char current_path[]) {
+    printf("%s\n", current_path);
     printf("rafael@bazinga~# ");
 }

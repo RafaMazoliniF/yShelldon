@@ -1,8 +1,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "utils.h"
 
-void call_internal_command(char * command) {
+void call_internal_command(char command[]) {
     if (strcmp(command, "exit") == 0) {
         exit(0);
     }
@@ -15,4 +16,7 @@ void call_internal_command(char * command) {
         //Insert code here
     }
 
+    if (strcmp(command, "clear") == 0) {
+        clearScreen();
+    }
 }
