@@ -2,14 +2,15 @@
 #include <stdio.h>
 #include <string.h>
 #include "internal_commands.h"
+#include "utils.h"
 
 int main() {
     char command[100];
-    printf("\x1b[H\x1b[J");
+    clearScreen();
 
     while (1) {
     
-        printf("rafael@bazinga~# ");
+        printUserFormat();
         fgets(command, sizeof(command), stdin);
         command[strcspn(command, "\n")] = '\0'; //Delete the \n character
         
