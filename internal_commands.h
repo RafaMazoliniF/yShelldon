@@ -4,19 +4,38 @@
 #include "utils.h"
 
 void call_internal_command(char command[]) {
-    if (strcmp(command, "exit") == 0) {
+    //array of command parts: [0] = command; [1:] = arguments
+    char * splitted_command[100];
+
+    //Splits command
+    command = strtok(command, " ");
+    int i;
+    for (i = 0; command != NULL && i < 99; i++) {
+        splitted_command[i] = command;
+        command = strtok(NULL, " ");
+    }
+
+    splitted_command[i] = NULL;
+    
+
+    if (strcmp(splitted_command[0], "exit") == 0) {
         exit(0);
     }
 
-    if (strcmp(command, "cd") == 0) {
+    if (strcmp(splitted_command[0], "cd") == 0) {
+        
+    }
+
+    if (strcmp(splitted_command[0], "path") == 0) {
         //Insert code here
     }
 
-    if (strcmp(command, "path") == 0) {
-        //Insert code here
-    }
-
-    if (strcmp(command, "clear") == 0) {
-        clearScreen();
+    if (strcmp(splitted_command[0], "clear") == 0) {
+        if (splitted_command[1] != NULL) {
+            printf("Implement error massage with --help\n");
+        }
+        else {
+            clearScreen();
+        }
     }
 }

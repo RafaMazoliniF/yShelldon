@@ -6,7 +6,7 @@
 
 int main() {
     char command[100];
-    char current_path[100] = "/home/"; strcat(current_path, getlogin()); strcat(current_path, "/"); //Default path "/home/[user]/"
+    char current_path[100] = "/home/"; strcat(current_path, getlogin()); //Default path "/home/[user]"
 
     clearScreen();
     while (1) {

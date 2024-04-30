@@ -5,6 +5,5 @@ void clearScreen() {
 
 //Print the default user format
 void printUserFormat(char current_path[]) {
-    printf("%s\n", current_path);
-    printf("rafael@bazinga~# ");
+    printf("\e[1;32m%s@bashinga⚡\e[0m:\e[1;34m~%s\e[0m$ ", getlogin(), current_path);
 }
