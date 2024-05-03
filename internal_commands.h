@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 #include "utils.h"
 
-void call_internal_command(char command[]) {
+void call_internal_command(char command[],char current_path[]) {
     //array of command parts: [0] = command; [1:] = arguments
     char * splitted_command[100];
 
@@ -31,7 +31,9 @@ void call_internal_command(char command[]) {
     }
 
     if (strcmp(splitted_command[0], "cd") == 0) {
-        
+        //CD -> atualizar o current_path.
+        strcat(current_path,"/");
+        strcat(current_path,splitted_command[1]);
     }
 
     if (strcmp(splitted_command[0], "path") == 0) {
@@ -48,15 +50,13 @@ void call_internal_command(char command[]) {
     }
 
     if (strcmp(splitted_command[0], "pwd") == 0) {
-        char cwd[1024]; // Buffer para armazenar o diretório atual
-        getcwd(cwd, sizeof(cwd));
-        printf("%s\n", cwd);
+        printf("%s\n", current_path);
     }
 
     if (strcmp(splitted_command[0], "ls") == 0) {
         pid_t pid = fork();
         if (pid == 0) {
-        execl("./ls","./ls",NULL,NULL);}
+        execl("./ls","./ls",current_path,NULL);}
         else{wait(NULL);}
     }
 }
