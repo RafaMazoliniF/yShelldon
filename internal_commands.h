@@ -10,9 +10,9 @@
 
 void call_internal_command(char command[], char current_path[]) {
     //array of command parts: [0] = command; [1:] = arguments
-    char * splitted_command[100];
+    char *splitted_command[100];
+    char* previous_path = (char *)malloc(100 * sizeof(char));
 
-    //Splits command
     command = strtok(command, " ");
     int i;
     for (i = 0; command != NULL && i < 99; i++) {
@@ -29,26 +29,29 @@ void call_internal_command(char command[], char current_path[]) {
         exit(0);
     }
 
+    strcpy(previous_path, current_path);
+    strcat(current_path, "/"); // CD -> atualizar o current_path.
+    strcat(current_path, splitted_command[1]);
+
+    //splitted_command[1] = /home/vini/Desktop
+
     if (strcmp(splitted_command[0], "cd") == 0) {
-
         //printf("%s\n", splitted_command[1]);
-        if (splitted_command[1] != NULL)
-        {
-            struct stat archive_info;
+        if (splitted_command[1] != NULL) {
+            struct stat path_stat;            
 
-            if (S_ISDIR(archive_info.st_mode)) {
-                if (chdir(splitted_command[1]) == 0) {
-                    strcat(current_path,"/"); //CD -> atualizar o current_path.
-                    strcat(current_path, splitted_command[1]);
-                } else {
+            if (stat(current_path, &path_stat) == 0) {
+                if (chdir(current_path) != 0) {
                     printf("error: failed to change directory to '%s'\n", splitted_command[1]);
-                }
+                    strcpy(current_path, previous_path);
+                } 
             } else {
                 printf("'%s' is not a valid directory\n", splitted_command[1]);
+                strcpy(current_path, previous_path);
             }
-        }
-        else
-        {
+        } /*else if (strcmp(splitted_command[1], "..") == 0) {
+            strcpy(current_path, previous_path);
+        }*/ else {
             printf("usage: cd <directory>\n");
         }
     }

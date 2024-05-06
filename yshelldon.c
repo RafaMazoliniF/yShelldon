@@ -26,7 +26,7 @@ int main() {
     char command[100];
     char* current_path = (char *)malloc(100 * sizeof(char));
     char home[] = "/home/";
-    strcat(current_path, home); strcat(current_path, getlogin()); //seta o path padrão para /home/user
+    strcat(current_path, home); strcat(current_path, getlogin()); // seta o path padrão para /home/user
     char *model = get_model();
 
     system("gcc -o ls ls.c");
