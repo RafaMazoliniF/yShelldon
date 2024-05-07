@@ -54,7 +54,6 @@ void call_internal_command(char command[], char current_path[]) {
 
                 //SE O COMANDO É ..
                 if(strcmp(splitted_command[1],"..") == 0){
-                    printf("\nVoltando..");
                     int tamanho = strlen(current_path);
 
                     for (int i = tamanho; i >= 0; i--) {
@@ -70,7 +69,6 @@ void call_internal_command(char command[], char current_path[]) {
                     if (dir != NULL) { //fala se o diretório existe
                         closedir(dir);
                         strcpy(current_path,temp_path); //se o dir existe o current path é atualizado
-                        printf("Abriu\n");
                     }
                 }
                 // AGORA TEM QUE TESTAR SE O CAMINHO É ABSOLUTO
@@ -108,5 +106,19 @@ void call_internal_command(char command[], char current_path[]) {
             wait(NULL);
         }
     }
+
+    if (strcmp(splitted_command[0], "cat") == 0) {
+        if (splitted_command[1] == NULL){
+            printf("Usage: cat [file1] [file2] ...\n");
+        }
+        else{
+            
+        }
+            
+        
+        
+        
+    }
+
 
 }
