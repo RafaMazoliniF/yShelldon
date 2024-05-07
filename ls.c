@@ -2,10 +2,11 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #define SIZE_COLUMN 15
 
-void command_ls(char* current_path, char* arg, DIR* diretorio);
+void command_ls(char* current_path, DIR* diretorio);
 void command_ls_a(char* current_path, char* arg, DIR* diretorio);
 //void command_ls_l(char* current_path, char* arg, DIR* diretorio);
 //void command_ls_la(char* current_path, char* arg, DIR* diretorio);
@@ -21,13 +22,13 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    printf("DASDASDAS");
+
     //printf("%s\n%s\n%s\n", current_path, argv[1], arg);
 
-    struct dirent *entrada;
-
-    if (arg == NULL) {
+    if (strcmp(arg, NULL) == 0) {
         //printar todos os arquivos (menos ocultos)
-        command_ls(current_path, arg, diretorio);
+        command_ls(current_path, diretorio);
     }
     else if (strcmp(arg, "-a") == 0)
     {
@@ -36,6 +37,7 @@ int main(int argc, char *argv[]) {
     }
     else if (strcmp(arg, "-l") == 0)
     {
+
         /*printar todas as infos dos arquivos (menos ocultos)
         - permissões
         - links
@@ -65,13 +67,16 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void command_ls (char* current_path, char* arg, DIR* diretorio) {
+void command_ls (char* current_path, DIR* diretorio) {
     struct dirent *entrada;
+    struct stat path_stat;
     int files_count = 0;
 
     while ((entrada = readdir(diretorio)) != NULL) {
         if (entrada->d_name[0] != '.' && strcmp(entrada->d_name, ".") != 0 && strcmp(entrada->d_name, "..") != 0) {
-            if(entrada->d_type == DT_DIR) {            
+            stat(entrada->d_name, &path_stat);
+
+            if (S_ISDIR(path_stat.st_mode)) {
                 printf("\e[1;34m%-*s\e[0m", SIZE_COLUMN, entrada->d_name);
                 files_count++;
             } else {
@@ -87,24 +92,25 @@ void command_ls (char* current_path, char* arg, DIR* diretorio) {
     }    
 }
 
-void command_ls_a (char* current_path, char* arg, DIR* diretorio) {
-    struct dirent *entrada;
-    int files_count = 0;
+// void command_ls_a (char* current_path, char* arg, DIR* diretorio) {
+//     struct dirent *entrada;
+//     struct stat path_stat;
+//     int files_count = 0;
 
-    while ((entrada = readdir(diretorio)) != NULL) {
-        if(entrada->d_type == DT_DIR) {            
-            printf("\e[1;34m%-*s\e[0m", SIZE_COLUMN, entrada->d_name);
-            files_count++;
-        } else {
-            printf("%-*s", SIZE_COLUMN, entrada->d_name);
-            files_count++;
-        }
+//     while ((entrada = readdir(diretorio)) != NULL) {
+//         stat(entrada->d_name, &path_stat);
 
-        if (files_count == 5) {
-            printf("\n");
-            files_count = 0; 
-        }
-    }
-}    
+//         if (S_ISDIR(path_stat.st_mode)) {
+//             printf("\e[1;34m%-*s\e[0m", SIZE_COLUMN, entrada->d_name);
+//             files_count++;
+//         } else {
+//             printf("%-*s", SIZE_COLUMN, entrada->d_name);
+//             files_count++;
+//         }
 
-
+//         if (files_count == 5) {
+//             printf("\n");
+//             files_count = 0; 
+//         }
+//     } 
+// }    
