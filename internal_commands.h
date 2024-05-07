@@ -74,7 +74,8 @@ void call_internal_command(char command[], char current_path[]) {
                     }
                 }
                 // AGORA TEM QUE TESTAR SE O CAMINHO É ABSOLUTO
-                else{printf("error: failed to change directory");}
+                else{printf("error: failed to change directory");
+                closedir(dir);}
                 //se o dir não existe manda um erro, não tem que atualizar o current_path
             } //SE O COMANDO NÃO É NULL, NEM ., NEM VÁLIDO
         else {printf("\nerror: directory cannot be found\n");} 
