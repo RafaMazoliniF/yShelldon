@@ -59,6 +59,7 @@ void call_internal_command(char command[], char current_path[]) {
                     for (int i = tamanho; i >= 0; i--) {
                         if (current_path[i] == '/') {
                             current_path[i] = '\0';
+                            closedir(dir);
                             break;
                         }
                     }
