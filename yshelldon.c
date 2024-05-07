@@ -42,6 +42,7 @@ int main() {
         command[strcspn(command, "\n")] = '\0'; //Delete the \n character
         
         call_internal_command(command, current_path);
+        
     }
     
     return 0;   
