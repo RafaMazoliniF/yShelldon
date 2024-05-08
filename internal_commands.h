@@ -9,6 +9,7 @@
 #include <dirent.h>
 #include "utils.h"
 
+
 void call_internal_command(char command[], char current_path[]) {
     //array of command parts: [0] = command; [1:] = arguments
     char *splitted_command[100];
@@ -81,6 +82,7 @@ void call_internal_command(char command[], char current_path[]) {
 
     if (strcmp(splitted_command[0], "path") == 0) {
         //Insert code here
+        puts(current_path);
     }
 
     if (strcmp(splitted_command[0], "clear") == 0) {
@@ -108,16 +110,13 @@ void call_internal_command(char command[], char current_path[]) {
     }
 
     if (strcmp(splitted_command[0], "cat") == 0) {
-        if (splitted_command[1] == NULL){
-            printf("Usage: cat [file1] [file2] ...\n");
+        pid_t pid = fork();
+        if(pid == 0){
+            execl("./cat","./cat",splitted_command[1],current_path,NULL);
         }
         else{
-            
+            wait(NULL);
         }
-            
-        
-        
-        
     }
 
 
