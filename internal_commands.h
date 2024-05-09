@@ -9,6 +9,7 @@
 #include <dirent.h>
 #include "utils.h"
 
+
 void call_internal_command(char command[], char current_path[]) {
     //array of command parts: [0] = command; [1:] = arguments
     char *splitted_command[100];
@@ -60,12 +61,12 @@ void call_internal_command(char command[], char current_path[]) {
 
                 //SE O COMANDO É ..
                 if(strcmp(splitted_command[1],"..") == 0){
-                    printf("\nVoltando..");
                     int tamanho = strlen(current_path);
 
                     for (int i = tamanho; i >= 0; i--) {
                         if (current_path[i] == '/') {
                             current_path[i] = '\0';
+                            closedir(dir);
                             break;
                         }
                     }
@@ -76,7 +77,6 @@ void call_internal_command(char command[], char current_path[]) {
                     if (dir != NULL) { //fala se o diretório existe
                         closedir(dir);
                         strcpy(current_path,temp_path); //se o dir existe o current path é atualizado
-                        printf("Abriu\n");
                     }
                 }
                 // AGORA TEM QUE TESTAR SE O CAMINHO É ABSOLUTO
@@ -89,6 +89,7 @@ void call_internal_command(char command[], char current_path[]) {
 
     if (strcmp(splitted_command[0], "path") == 0) {
         //Insert code here
+        puts(current_path);
     }
 
     if (strcmp(splitted_command[0], "clear") == 0) {
@@ -114,5 +115,16 @@ void call_internal_command(char command[], char current_path[]) {
             wait(NULL);
         }
     }
+
+    if (strcmp(splitted_command[0], "cat") == 0) {
+        pid_t pid = fork();
+        if(pid == 0){
+            execl("./cat","./cat",splitted_command[1],current_path,NULL);
+        }
+        else{
+            wait(NULL);
+        }
+    }
+
 
 }
