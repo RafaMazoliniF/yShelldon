@@ -41,11 +41,17 @@ void call_internal_command(char command[], char current_path[]) {
         //SE O COMANDO NÃO É .
         else if(strcmp(splitted_command[1], ".") != 0){ //se o comando não for . vai pra isso
 
+        //CHECA SE É ABSOLUTO
+        if(strstr(splitted_command[1], "/home/") != NULL){
+            strcpy(temp_path,splitted_command[1]);
+        }
+        //CHECA SE É RELATIVO
+        else{ 
             //cria a variavel temp_path
             strcpy(temp_path, current_path);
             strcat(temp_path, "/");
             strcat(temp_path, splitted_command[1]);
-
+        }
             printf("Temp path: %s\n", temp_path);
             //CRIOU UM PATH TEMP
             

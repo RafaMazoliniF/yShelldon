@@ -24,7 +24,7 @@ char *get_model() {
 int main() {
     char title[100];
     char command[100];
-    char* current_path = (char *)malloc(100 * sizeof(char));
+    char* current_path = (char*)malloc(100 * sizeof(char));
     char home[] = "/home/";
     strcat(current_path, home); strcat(current_path, getlogin()); // seta o path padrão para /home/user
     char *model = get_model();
