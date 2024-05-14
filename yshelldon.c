@@ -24,27 +24,25 @@ char *get_model() {
 int main() {
     char title[100];
     char command[100];
-    char* current_path = (char*)malloc(100 * sizeof(char));
+    char* current_path = (char *)malloc(100 * sizeof(char));
     char home[] = "/home/";
     strcat(current_path, home); strcat(current_path, getlogin()); // seta o path padrão para /home/user
-    char *model = get_model();
+    //char *model = get_model();
 
     system("gcc -o ls ls.c");
-    system("gcc -o cat cat.c");
-    sprintf(title, "⚡BAZINGA⚡ - %s@%s:~%s", getlogin(), model, current_path);
+    sprintf(title, "%s@bashinga⚡:~%s", getlogin(), current_path);
     printf("\033]0;%s\007", title);
 
     clearScreen();
-    while (1) {
-        
+    for (;;) {
+
         printUserFormat(current_path);
 
         fgets(command, sizeof(command), stdin);
         command[strcspn(command, "\n")] = '\0'; //Delete the \n character
         
         call_internal_command(command, current_path);
-        
     }
-    
+
     return 0;   
 }
