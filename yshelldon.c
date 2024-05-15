@@ -30,6 +30,7 @@ int main() {
     //char *model = get_model();
 
     system("gcc -o ls ls.c");
+    system("gcc -o cat cat.c");
     sprintf(title, "%s@bashinga⚡:~%s", getlogin(), current_path);
     printf("\033]0;%s\007", title);
 
