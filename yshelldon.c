@@ -22,6 +22,8 @@ char *get_model() {
 }
 
 int main() {
+    setenv("PATH", "/bin:/sbin:/usr/bin:/usr/sbin:/user/local/bin:/user/local/sbin",1);
+
     char title[100];
     char command[100];
     char* current_path = (char *)malloc(100 * sizeof(char));
@@ -38,6 +40,7 @@ int main() {
 
         printUserFormat(current_path);
 
+        fflush(stdin);
         fgets(command, sizeof(command), stdin);
         command[strcspn(command, "\n")] = '\0'; //Delete the \n character
         

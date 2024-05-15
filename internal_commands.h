@@ -29,7 +29,7 @@ void call_internal_command(char command[], char current_path[]) {
         exit(0);
     }
 
-    if (strcmp(splitted_command[0], "cd") == 0) 
+    else if (strcmp(splitted_command[0], "cd") == 0) 
     {
 
         //SE NÃO TEM COMANDO
@@ -82,11 +82,12 @@ void call_internal_command(char command[], char current_path[]) {
         } 
     } 
 
-    if (strcmp(splitted_command[0], "path") == 0) {
-        //Insert code here
+    else if (strcmp(splitted_command[0], "path") == 0) {
+        char * path = getenv("PATH");
+        printf("%s\n", path);
     }
 
-    if (strcmp(splitted_command[0], "clear") == 0) {
+    else if (strcmp(splitted_command[0], "clear") == 0) {
         if (splitted_command[1] != NULL) {
             printf("usage: clear");
         }
@@ -95,21 +96,42 @@ void call_internal_command(char command[], char current_path[]) {
         }
     }
 
-    if (strcmp(splitted_command[0], "pwd") == 0) {
+    else if (strcmp(splitted_command[0], "pwd") == 0) {
         printf("%s", current_path);
     }
 
-    if (strcmp(splitted_command[0], "ls") == 0) {
+    else if (strcmp(splitted_command[0], "ls") == 0) {
         pid_t pid = fork();
 
         if (pid == 0) {
-            execl("./ls","ls", current_path, splitted_command[1], splitted_command[2], NULL);
+            execlp("ls","ls", current_path, splitted_command[1], splitted_command[2], NULL);
         }
         else {
             wait(NULL);
         }
     }
 
-    
+    else {
+        pid_t pid = fork();
+        if (pid < 0) {
+            perror("fork error");
+            exit(1);
+        }
 
+        if (pid == 0) {
+            if (splitted_command[0][0] == '.' && splitted_command[0][1] == '/') {
+                if (execv(splitted_command[0], splitted_command) == -1) {
+                    perror("file not found");
+                    exit(1);
+                }
+            } else {
+                if (execvp(splitted_command[0], splitted_command) == -1) {
+                    perror("file not found");
+                    exit(1);
+                }
+            }
+        }
+        
+        wait(NULL);
+    }
 }
