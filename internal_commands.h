@@ -113,7 +113,7 @@ void call_internal_command(char command[], char current_path[]) {
     if (strcmp(splitted_command[0], "cat") == 0) {
         pid_t pid = fork();
         if(pid == 0){
-            execl("./cat","./cat",splitted_command[1],current_path,NULL);
+            execl("./cat","./cat",splitted_command[1],NULL);
         }
         else{
             wait(NULL);
