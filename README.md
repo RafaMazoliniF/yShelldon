@@ -68,11 +68,12 @@ Este shell suporta os comandos:
    ```
    cat <nome_do_arquivo_origem> > <nome_do_arquivo_destino>
    ```
-
+   
 - **Diretório atual**
   ```
   pwd
   ```
+  
 - **Saída**
   ```
   exit
