@@ -2,6 +2,17 @@
 
 Este é um simples shell implementado em linguagem C. Ele fornece uma interface de linha de comando para interagir com o sistema operacional.
 
+### Instalação
+1. **Navegue até um diretório**
+    ```
+    cd <nome_do_diretório>
+    ```
+    
+2. **Clone o repositório**
+    ```
+    git clone https://github.com/RafaMazoliniF/yShelldon.git
+    ```
+    
 ### Como executar
 1. **Compilação:** Compile o progrma usando um compilador C compatível, como o GCC
    
@@ -18,6 +29,7 @@ Este é um simples shell implementado em linguagem C. Ele fornece uma interface 
    ```
    ./yshell <nome_do_arquiuvo_de_comandos>
    ```
+   
 ### Comandos suportados
 Este shell suporta os comandos:
 - **Entrada em um diretório**
