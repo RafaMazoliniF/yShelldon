@@ -49,10 +49,10 @@ Este shell suporta os comandos:
    ls -al
    ```
    ```
-   ls -la
+   ls -a -l
    ```
    ```
-   ls -a -l 
+   ls -la 
    ```
    ```
    ls -l -a
