@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <pwd.h>
+#include <ctype.h>
 #include <grp.h>
 
 #define SIZE_COLUMN 10
@@ -63,14 +64,14 @@ void command_ls(char* current_path, DIR* diretorio) {
             stat(full_path, &path_stat);
 
             if (S_ISDIR(path_stat.st_mode)) {
-                printf("\e[1;34m%-*s\e[0m", strlen(entrada->d_name)+3, entrada->d_name);
+                printf("\e[1;34m%-*s", (int)strlen(entrada->d_name)+3, entrada->d_name);
                 files_count++;
             } else {
-                printf("%-*s", strlen(entrada->d_name)+3, entrada->d_name);
+                printf("%-*s", (int)strlen(entrada->d_name)+3, entrada->d_name);
                 files_count++;
             }
 
-            if (files_count == 5) {
+            if (files_count == 7) {
                 printf("\n");
                 files_count = 0; 
             }
@@ -92,10 +93,10 @@ void command_ls_a(char* current_path, DIR* diretorio) {
         stat(full_path, &path_stat);
 
         if (S_ISDIR(path_stat.st_mode)) {
-            printf("\e[1;34m%-*s\e[0m", strlen(entrada->d_name)+3, entrada->d_name);
+            printf("\e[1;34m%-*s", (int)strlen(entrada->d_name)+3, entrada->d_name);
             files_count++;
         } else {
-            printf("%-*s", strlen(entrada->d_name)+3, entrada->d_name);
+            printf("%-*s", (int)strlen(entrada->d_name)+3, entrada->d_name);
             files_count++;
         }
 
@@ -121,7 +122,7 @@ void command_ls_l(char* current_path, DIR* diretorio) {
         if (entrada->d_name[0] != '.' && strcmp(entrada->d_name, ".") != 0 && strcmp(entrada->d_name, "..") != 0) {
             stat(full_path, &path_stat);
 
-            int size = snprintf(NULL, 0, "%d", path_stat.st_size);
+            int size = snprintf(NULL, 0, "%d", (int)path_stat.st_size);
 
             if (size > max_size) {
                 max_size = size;
@@ -141,14 +142,14 @@ void command_ls_l(char* current_path, DIR* diretorio) {
             struct passwd *owner = getpwuid(path_stat.st_uid);
             struct group *group = getgrgid(path_stat.st_gid);
 
-            printf((path_stat.st_mode & S_ISDIR(path_stat.st_mode)) ? "d" : "-");
-            printf((path_stat.st_mode & S_IRUSR) ? "r" : "-");
-            printf((path_stat.st_mode & S_IWUSR) ? "w" : "-");
-            printf((path_stat.st_mode & S_IXUSR) ? "x" : "-");
+            printf((path_stat.st_mode & S_ISDIR(path_stat.st_mode)) ? "d" : "-"); 
+            printf((path_stat.st_mode & S_IRUSR) ? "r" : "-"); 
+            printf((path_stat.st_mode & S_IWUSR) ? "w" : "-"); 
+            printf((path_stat.st_mode & S_IXUSR) ? "x" : "-"); 
 
-            printf((path_stat.st_mode & S_IRGRP) ? "r" : "-");
-            printf((path_stat.st_mode & S_IWGRP) ? "w" : "-");
-            printf((path_stat.st_mode & S_IXGRP) ? "x" : "-");
+            printf((path_stat.st_mode & S_IRGRP) ? "r" : "-"); 
+            printf((path_stat.st_mode & S_IWGRP) ? "w" : "-"); 
+            printf((path_stat.st_mode & S_IXGRP) ? "x" : "-"); 
 
             printf((path_stat.st_mode & S_IROTH) ? "r" : "-");
             printf((path_stat.st_mode & S_IWOTH) ? "w" : "-");
@@ -160,7 +161,7 @@ void command_ls_l(char* current_path, DIR* diretorio) {
 
             printf("%s ", owner->pw_name);
             printf("%s ", group->gr_name);
-            printf("%*d ", max_size, path_stat.st_size);
+            printf("%*d ", max_size, (int) path_stat.st_size);
 
             char time[100];
             strftime(time, 100, "%H:%M", localtime(&path_stat.st_mtime));
@@ -203,7 +204,7 @@ void command_ls_la(char* current_path, DIR* diretorio) {
         if (entrada->d_name[0] != '.' && strcmp(entrada->d_name, ".") != 0 && strcmp(entrada->d_name, "..") != 0) {
             stat(full_path, &path_stat);
 
-            int size = snprintf(NULL, 0, "%d", path_stat.st_size);
+            int size = snprintf(NULL, 0, "%d", (int)path_stat.st_size);
 
             if (size > max_size) {
                 max_size = size;
@@ -241,7 +242,7 @@ void command_ls_la(char* current_path, DIR* diretorio) {
 
         printf("%s ", owner->pw_name);
         printf("%s ", group->gr_name);
-        printf("%*d ", max_size, path_stat.st_size);
+        printf("%*d ", max_size, (int)path_stat.st_size);
 
         char time[100];
         strftime(time, 100, "%H:%M", localtime(&path_stat.st_mtime));
@@ -260,13 +261,12 @@ void command_ls_la(char* current_path, DIR* diretorio) {
         
         printf("%s ", str_month);
         printf("%s ", str_day);
-        printf("%s ", time);
+        printf("%s ", time);        
 
         if (S_ISDIR(path_stat.st_mode)) {
-            printf("\e[1;34m%s\e[0m\n", entrada->d_name);
+            printf("\e[1;34m%s\n", entrada->d_name);
         } else {
             printf("%s\n", entrada->d_name);
         }
     }
 }
-

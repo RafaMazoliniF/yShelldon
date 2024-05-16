@@ -1,11 +1,10 @@
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-// Clear the entire terminal
-void clearScreen() {
-    printf("\033[2J\033[H");  //Clear screen
-}
+void clearScreen()
+{
+    printf("\ec\e[3J"); 
+} 
 
 //Print the default user format
 void printUserFormat(char current_path[]) {

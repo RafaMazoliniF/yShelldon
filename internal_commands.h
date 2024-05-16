@@ -7,12 +7,12 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <dirent.h>
+#include <fcntl.h>
 #include "utils.h"
 
 void call_internal_command(char command[], char current_path[]) {
     //array of command parts: [0] = command; [1:] = arguments
     char *splitted_command[100];
-    char* previous_path = (char *)malloc(100 * sizeof(char));
     char* temp_path = (char *)malloc(100 * sizeof(char));
 
     command = strtok(command, " ");
@@ -29,7 +29,7 @@ void call_internal_command(char command[], char current_path[]) {
         exit(0);
     }
 
-    if (strcmp(splitted_command[0], "cd") == 0) 
+    else if (strcmp(splitted_command[0], "cd") == 0) 
     {
 
         //SE NÃO TEM COMANDO
@@ -66,7 +66,7 @@ void call_internal_command(char command[], char current_path[]) {
                 else if(stat(temp_path, &path_stat) == 0) { //fala se é um diretório ou não
                     if (dir != NULL) { //fala se o diretório existe
                         closedir(dir);
-                        strcpy(current_path,temp_path); //se o dir existe o current path é atualizado
+                        strcpy(current_path, temp_path); //se o dir existe o current path é atualizado
                         //printf("Abriu\n");
                     }
                 }
@@ -82,11 +82,12 @@ void call_internal_command(char command[], char current_path[]) {
         } 
     } 
 
-    if (strcmp(splitted_command[0], "path") == 0) {
-        //Insert code here
+    else if (strcmp(splitted_command[0], "$PATH") == 0) {
+        char * path = getenv("PATH");
+        printf("%s\n", path);
     }
 
-    if (strcmp(splitted_command[0], "clear") == 0) {
+    else if (strcmp(splitted_command[0], "clear") == 0) {
         if (splitted_command[1] != NULL) {
             printf("usage: clear");
         }
@@ -95,11 +96,11 @@ void call_internal_command(char command[], char current_path[]) {
         }
     }
 
-    if (strcmp(splitted_command[0], "pwd") == 0) {
+    else if (strcmp(splitted_command[0], "pwd") == 0) {
         printf("%s", current_path);
     }
 
-    if (strcmp(splitted_command[0], "ls") == 0) {
+    else if (strcmp(splitted_command[0], "ls") == 0) {
         pid_t pid = fork();
 
         if (pid == 0) {
@@ -109,16 +110,19 @@ void call_internal_command(char command[], char current_path[]) {
             wait(NULL);
         }
     }
-
-    if (strcmp(splitted_command[0], "cat") == 0) {
+    ///adicionar outros comando acima do else
+    else if (strcmp(splitted_command[0], "cat") == 0) {
         pid_t pid = fork();
-        if(pid == 0){
+
+        if(pid == 0) {
             execl("./cat","./cat", splitted_command[1], splitted_command[2], splitted_command[3],current_path, NULL);
         }
-        else{
+        else {
             wait(NULL);
         }
     }
 
-
+    else {
+        printf("%s: command not found\n", splitted_command[0]);
+    }
 }
