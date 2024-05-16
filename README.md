@@ -1,4 +1,5 @@
-# **Shell em C**
+# YShelldon ⚡
+
 Este é um simples shell implementado em linguagem C. Ele fornece uma interface de linha de comando para interagir com o sistema operacional.
 
 ### Como executar
