@@ -10,7 +10,7 @@
 #include <fcntl.h>
 #include "utils.h"
 
-void call_internal_command(char command[], char current_path[]) {
+void call_internal_command(char command[], char current_path[], int flag) {
     //array of command parts: [0] = command; [1:] = arguments
     char *splitted_command[100];
     char* temp_path = (char *)malloc(100 * sizeof(char));
@@ -31,7 +31,6 @@ void call_internal_command(char command[], char current_path[]) {
 
     else if (strcmp(splitted_command[0], "cd") == 0) 
     {
-
         //SE NÃO TEM COMANDO
         if(splitted_command[1] == NULL) {
             char home[] = "/home/";
@@ -68,6 +67,9 @@ void call_internal_command(char command[], char current_path[]) {
                         closedir(dir);
                         strcpy(current_path, temp_path); //se o dir existe o current path é atualizado
                         //printf("Abriu\n");
+                        if (flag) {
+                            printUserFormat(current_path);
+                        }
                     }
                 }
                 // AGORA TEM QUE TESTAR SE O CAMINHO É ABSOLUTO
@@ -79,7 +81,7 @@ void call_internal_command(char command[], char current_path[]) {
             } //SE O COMANDO NÃO É NULL, NEM ., NEM VÁLIDO
         else {
             printf("error: directory cannot be found\n");
-        } 
+        }
     } 
 
     else if (strcmp(splitted_command[0], "$PATH") == 0) {
@@ -110,12 +112,11 @@ void call_internal_command(char command[], char current_path[]) {
             wait(NULL);
         }
     }
-    ///adicionar outros comando acima do else
     else if (strcmp(splitted_command[0], "cat") == 0) {
         pid_t pid = fork();
 
         if(pid == 0) {
-            execl("./cat","./cat", splitted_command[1], splitted_command[2], splitted_command[3],current_path, NULL);
+            execl("./cat","./cat", splitted_command[1], splitted_command[2], splitted_command[3], current_path, NULL);
         }
         else {
             wait(NULL);
