@@ -111,27 +111,39 @@ void call_internal_command(char command[], char current_path[]) {
         }
     }
 
-    else {
+    else if (strcmp(splitted_command[0], "cat") == 0) {
         pid_t pid = fork();
-        if (pid < 0) {
-            perror("fork error");
-            exit(1);
-        }
 
-        if (pid == 0) {
-            if (splitted_command[0][0] == '.' && splitted_command[0][1] == '/') {
-                if (execv(splitted_command[0], splitted_command) == -1) {
-                    perror("file not found");
-                    exit(1);
-                }
-            } else {
-                if (execvp(splitted_command[0], splitted_command) == -1) {
-                    perror("file not found");
-                    exit(1);
-                }
-            }
+        if(pid == 0) {
+            execl("./cat","./cat", splitted_command[1], splitted_command[2], splitted_command[3], current_path, NULL);
         }
-        
-        wait(NULL);
+        else {
+            wait(NULL);
+        }
     }
+
+
+    // else {
+    //     pid_t pid = fork();
+    //     if (pid < 0) {
+    //         perror("fork error");
+    //         exit(1);
+    //     }
+
+    //     if (pid == 0) {
+    //         if (splitted_command[0][0] == '.' && splitted_command[0][1] == '/') {
+    //             if (execv(splitted_command[0], splitted_command) == -1) {
+    //                 perror("file not found");
+    //                 exit(1);
+    //             }
+    //         } else {
+    //             if (execvp(splitted_command[0], splitted_command) == -1) {
+    //                 perror("file not found");
+    //                 exit(1);
+    //             }
+    //         }
+    //     }
+        
+    //     wait(NULL);
+    // }
 }

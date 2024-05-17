@@ -22,7 +22,7 @@ char *get_model() {
 }
 
 int main() {
-    setenv("PATH", "/bin:/sbin:/usr/bin:/usr/sbin:/user/local/bin:/user/local/sbin",1);
+    //setenv("PATH", "/bin:/sbin:/usr/bin:/usr/sbin:/user/local/bin:/user/local/sbin",1);
 
     char title[100];
     char command[100];
