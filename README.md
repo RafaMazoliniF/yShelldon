@@ -13,7 +13,7 @@ Este é um simples shell implementado em linguagem C. Ele fornece uma interface 
     git clone https://github.com/RafaMazoliniF/yShelldon.git
     ```
     
-### Como executar
+### Execução
 1. **Compilação:** Compile o progrma usando um compilador C compatível, como o GCC
    
    ```
