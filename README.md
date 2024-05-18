@@ -90,11 +90,11 @@ Este shell suporta os comandos:
   ```
   b) Adição de diretórios
   ```
-  $PATH add <diretório>
+  $PATH -add <diretório>
   ```
   c) Remoção de diretório
   ```
-  $PATH remove <diretório>
+  $PATH -rm <diretório>
   ```
   
 - **Diretório atual**
