@@ -1,4 +1,4 @@
-# YShelldon ⚡
+# YSHELLDON ⚡
 
 Este é um simples shell implementado em linguagem C. Ele fornece uma interface de linha de comando para interagir com o sistema operacional.
 
@@ -82,6 +82,21 @@ Este shell suporta os comandos:
    cat <nome_do_arquivo_origem> > <nome_do_arquivo_destino>
    ```
    
+- **Manipulação do PATH**
+
+  a) Impressão na tela
+  ```
+  $PATH
+  ```
+  b) Adição de diretórios
+  ```
+  $PATH add <diretório>
+  ```
+  c) Remoção de diretório
+  ```
+  $PATH remove <diretório>
+  ```
+  
 - **Diretório atual**
   ```
   pwd
