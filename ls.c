@@ -18,7 +18,6 @@ void command_ls_la(char* current_path, DIR* diretorio);
 
 
 int main(int argc, char *argv[]) {
-    printf("MORELO GAYZERO");
     char* current_path = argv[1];
     char* arg = (argc > 2) ? argv[2] : NULL;
     char* arg2 = argv[3];
