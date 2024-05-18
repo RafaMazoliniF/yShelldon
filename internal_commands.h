@@ -84,37 +84,41 @@ void call_internal_command(char command[], char current_path[]) {
 
     else if (strcmp(splitted_command[0], "path") == 0) {
 
+        //ADICIONA O PATH NOVO
         if(splitted_command[1] != NULL && strcmp(splitted_command[1],"add") == 0){
 
-            char* path_antigo = getenv("PATH");
-            size_t tamanho_path = strlen(path_antigo) + strlen(splitted_command[2]) + 2;
+            char* path_antigo = getenv("PATH"); //SALVA O PATH ANTIGO
+            size_t tamanho_path = strlen(path_antigo) + strlen(splitted_command[2]) + 2;    //ALOCA O PATH NOVO
             char* path_novo = malloc(tamanho_path);
-            strcpy(path_novo,path_antigo);
-            strcat(path_novo,":"); strcat(path_novo,splitted_command[2]);
-            setenv("PATH",path_novo,1);
-            free(path_novo);
-            printf("PATH novo: %s\n", getenv("PATH"));
+            strcpy(path_novo,path_antigo);  //COPIA O PATH NOVO
+            strcat(path_novo,":"); strcat(path_novo,splitted_command[2]);   //CONCATENA O PATH NOVO
+            setenv("PATH",path_novo,1); //ENVIA O PATH NOVO
+            free(path_novo);  //LIBERA O ESPACO DO PATH ANTIGO  
+            printf("PATH novo:%s\n", getenv("PATH"));
+
         }
 
         else if(splitted_command[1] != NULL && strcmp(splitted_command[1],"remove") == 0){
 
-            char* path_antigo = getenv("PATH");
-            size_t tamanho_path = strlen(path_antigo);
-            char* path_novo = malloc(tamanho_path);
-            strcpy(path_novo,path_antigo);
-            for (int i = tamanho_path; i >= 0; i--) {
+            //REMOVE O PATH ANTIGO (ATÉ O ULTIMO :)
+            char* path_antigo = getenv("PATH"); //PEGA O PATH ANTIGO
+            size_t tamanho_path = strlen(path_antigo);  
+            char* path_novo = malloc(tamanho_path); //ALOCA PATH NOVO
+            strcpy(path_novo,path_antigo);  
+            for (int i = tamanho_path; i >= 0; i--) {   //RETIRA ATÉ O ULTIMO : DO PATH NOVO
                         if (path_novo[i] == ':') {
                             path_novo[i] = '\0';
                             break;
                         }
                     }
-            setenv("PATH",path_novo,1);
+
+            setenv("PATH",path_novo,1); //ENVIA O PATH NOVO 
             free(path_novo);
-            printf("PATH novo: %s\n", getenv("PATH"));
+            printf("PATH novo: %s\n", getenv("PATH")); 
             
         }
         else{
-        printf("%s\n",getenv("PATH"));
+        printf("%s\n",getenv("PATH"));  //PRINTA PATH ATUAL
         }
     }
 

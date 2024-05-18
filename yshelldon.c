@@ -22,8 +22,12 @@ char *get_model() {
 }
 
 int main() {
-    extern char **environ;
-    setenv("PATH","/home/andremarques/Desktop/Escola/SO/ysheldon/yShelldon/bin:/usr/bin",1);
+    extern char **environ;  //inicializa o ambiente privado
+    char atual[1024];
+    getcwd(atual,sizeof(atual));    //PEGANDO A PASTA ATUAL COMO PATH
+    strcat(atual,"/bin");   //SETANDO O /BIN
+    
+    setenv("PATH",atual,1);  //seta nosso bin como path
 
     char title[100];
     char command[100];
