@@ -14,6 +14,11 @@ void call_internal_command(char command[], char current_path[]) {
     char *splitted_command[100];
     char* previous_path = (char *)malloc(100 * sizeof(char));
     char* temp_path = (char *)malloc(100 * sizeof(char));
+    char *env[] = {"PATH=/home/andremarques/Desktop/Escola/SO/ysheldon/yShelldon/bin:/usr/bin", NULL };
+    
+    extern char **environ;
+    environ = env;
+
 
     command = strtok(command, " ");
     int i;
@@ -82,10 +87,10 @@ void call_internal_command(char command[], char current_path[]) {
         } 
     } 
 
-    else if (strcmp(splitted_command[0], "path") == 0) {
-        char * path = getenv("PATH");
-        printf("%s\n", path);
-    }
+    // else if (strcmp(splitted_command[0], "path") == 0) {
+    //     char * path = getenv("PATH");
+    //     printf("%s\n", path);
+    // }
 
     else if (strcmp(splitted_command[0], "clear") == 0) {
         if (splitted_command[1] != NULL) {
@@ -97,14 +102,15 @@ void call_internal_command(char command[], char current_path[]) {
     }
 
     else if (strcmp(splitted_command[0], "pwd") == 0) {
-        printf("%s", current_path);
+        printf("%s\n", current_path);
     }
 
     else if (strcmp(splitted_command[0], "ls") == 0) {
         pid_t pid = fork();
 
         if (pid == 0) {
-            execlp("ls","ls", current_path, splitted_command[1], splitted_command[2], NULL);
+        char *args[] = {"./ls", current_path, splitted_command[1], splitted_command[2], NULL};
+        execvp("ls", args);
         }
         else {
             wait(NULL);
@@ -115,35 +121,35 @@ void call_internal_command(char command[], char current_path[]) {
         pid_t pid = fork();
 
         if(pid == 0) {
-            execl("./cat","./cat", splitted_command[1], splitted_command[2], splitted_command[3], current_path, NULL);
+            char *args[] = { "./cat", splitted_command[1], splitted_command[2], splitted_command[3], NULL };
+            execvp("cat",args);
         }
         else {
             wait(NULL);
         }
     }
 
+    else {
+        pid_t pid = fork();
+        if (pid < 0) {
+            perror("fork error");
+            exit(1);
+        }
 
-    // else {
-    //     pid_t pid = fork();
-    //     if (pid < 0) {
-    //         perror("fork error");
-    //         exit(1);
-    //     }
-
-    //     if (pid == 0) {
-    //         if (splitted_command[0][0] == '.' && splitted_command[0][1] == '/') {
-    //             if (execv(splitted_command[0], splitted_command) == -1) {
-    //                 perror("file not found");
-    //                 exit(1);
-    //             }
-    //         } else {
-    //             if (execvp(splitted_command[0], splitted_command) == -1) {
-    //                 perror("file not found");
-    //                 exit(1);
-    //             }
-    //         }
-    //     }
+        if (pid == 0) {
+            if (splitted_command[0][0] == '.' && splitted_command[0][1] == '/') {
+                if (execvp(splitted_command[0], splitted_command) == -1) {
+                    perror("file not found");
+                    exit(1);
+                }
+            } else {
+                if (execvp(splitted_command[0], splitted_command) == -1) {
+                    perror("file not found");
+                    exit(1);
+                }
+            }
+        }
         
-    //     wait(NULL);
-    // }
+        wait(NULL);
+    }
 }

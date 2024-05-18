@@ -31,7 +31,7 @@ int main() {
     strcat(current_path, home); strcat(current_path, getlogin()); // seta o path padrão para /home/user
     //char *model = get_model();
 
-    system("gcc -o ls ls.c");
+    //system("gcc ls.c -o ls");
     sprintf(title, "%s@bashinga⚡:~%s", getlogin(), current_path);
     printf("\033]0;%s\007", title);
 
