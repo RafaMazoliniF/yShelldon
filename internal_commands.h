@@ -14,11 +14,6 @@ void call_internal_command(char command[], char current_path[]) {
     char *splitted_command[100];
     char* previous_path = (char *)malloc(100 * sizeof(char));
     char* temp_path = (char *)malloc(100 * sizeof(char));
-    char *env[] = {"PATH=/home/andremarques/Desktop/Escola/SO/ysheldon/yShelldon/bin:/usr/bin", NULL };
-    
-    extern char **environ;
-    environ = env;
-
 
     command = strtok(command, " ");
     int i;
@@ -87,10 +82,41 @@ void call_internal_command(char command[], char current_path[]) {
         } 
     } 
 
-    // else if (strcmp(splitted_command[0], "path") == 0) {
-    //     char * path = getenv("PATH");
-    //     printf("%s\n", path);
-    // }
+    else if (strcmp(splitted_command[0], "path") == 0) {
+
+        if(splitted_command[1] != NULL && strcmp(splitted_command[1],"add") == 0){
+
+            char* path_antigo = getenv("PATH");
+            size_t tamanho_path = strlen(path_antigo) + strlen(splitted_command[2]) + 2;
+            char* path_novo = malloc(tamanho_path);
+            strcpy(path_novo,path_antigo);
+            strcat(path_novo,":"); strcat(path_novo,splitted_command[2]);
+            setenv("PATH",path_novo,1);
+            free(path_novo);
+            printf("PATH novo: %s\n", getenv("PATH"));
+        }
+
+        else if(splitted_command[1] != NULL && strcmp(splitted_command[1],"remove") == 0){
+
+            char* path_antigo = getenv("PATH");
+            size_t tamanho_path = strlen(path_antigo);
+            char* path_novo = malloc(tamanho_path);
+            strcpy(path_novo,path_antigo);
+            for (int i = tamanho_path; i >= 0; i--) {
+                        if (path_novo[i] == ':') {
+                            path_novo[i] = '\0';
+                            break;
+                        }
+                    }
+            setenv("PATH",path_novo,1);
+            free(path_novo);
+            printf("PATH novo: %s\n", getenv("PATH"));
+            
+        }
+        else{
+        printf("%s\n",getenv("PATH"));
+        }
+    }
 
     else if (strcmp(splitted_command[0], "clear") == 0) {
         if (splitted_command[1] != NULL) {
@@ -121,7 +147,7 @@ void call_internal_command(char command[], char current_path[]) {
         pid_t pid = fork();
 
         if(pid == 0) {
-            char *args[] = { "./cat", splitted_command[1], splitted_command[2], splitted_command[3], NULL };
+            char *args[] = { "./cat", splitted_command[1], splitted_command[2], splitted_command[3], current_path, NULL };
             execvp("cat",args);
         }
         else {

@@ -22,7 +22,8 @@ char *get_model() {
 }
 
 int main() {
-    //setenv("PATH", "/bin:/sbin:/usr/bin:/usr/sbin:/user/local/bin:/user/local/sbin",1);
+    extern char **environ;
+    setenv("PATH","/home/andremarques/Desktop/Escola/SO/ysheldon/yShelldon/bin:/usr/bin",1);
 
     char title[100];
     char command[100];
