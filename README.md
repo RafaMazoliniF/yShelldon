@@ -92,9 +92,9 @@ Este shell suporta os comandos:
   ```
   $PATH -add <diretório>
   ```
-  c) Remoção de diretório
+  c) Remoção do último diretório
   ```
-  $PATH -rm <diretório>
+  $PATH -rm 
   ```
   
 - **Diretório atual**
