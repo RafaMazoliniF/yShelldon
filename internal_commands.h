@@ -82,10 +82,10 @@ void call_internal_command(char command[], char current_path[]) {
         } 
     } 
 
-    else if (strcmp(splitted_command[0], "path") == 0) {
+    else if (strcmp(splitted_command[0], "$PATH") == 0) {
 
         //ADICIONA O PATH NOVO
-        if(splitted_command[1] != NULL && strcmp(splitted_command[1],"add") == 0){
+        if(splitted_command[1] != NULL && strcmp(splitted_command[1],"-add") == 0){
 
             char* path_antigo = getenv("PATH"); //SALVA O PATH ANTIGO
             size_t tamanho_path = strlen(path_antigo) + strlen(splitted_command[2]) + 2;    //ALOCA O PATH NOVO
@@ -98,7 +98,7 @@ void call_internal_command(char command[], char current_path[]) {
 
         }
 
-        else if(splitted_command[1] != NULL && strcmp(splitted_command[1],"remove") == 0){
+        else if(splitted_command[1] != NULL && strcmp(splitted_command[1],"-rm") == 0){
 
             //REMOVE O PATH ANTIGO (ATÉ O ULTIMO :)
             char* path_antigo = getenv("PATH"); //PEGA O PATH ANTIGO
