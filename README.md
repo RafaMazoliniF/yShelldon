@@ -79,7 +79,7 @@ Este shell suporta os comandos:
    ```
    b) Cópia do conteúdo para outro arquivo
    ```
-   cat <nome_do_arquivo_origem> > <nome_do_arquivo_destino>
+   cat <nome_do_arquivo_origem.formato> > <nome_do_arquivo_destino.formato>
    ```
    
 - **Manipulação do PATH**
