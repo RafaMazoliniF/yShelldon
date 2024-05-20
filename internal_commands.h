@@ -12,8 +12,7 @@
 void call_internal_command(char command[], char current_path[]) {
     //array of command parts: [0] = command; [1:] = arguments
     char *splitted_command[100];
-    char* previous_path = (char *)malloc(100 * sizeof(char));
-    char* temp_path = (char *)malloc(100 * sizeof(char));
+    char* temp_path = (char *)malloc(1024 * sizeof(char));
 
     command = strtok(command, " ");
     int i;
@@ -26,6 +25,7 @@ void call_internal_command(char command[], char current_path[]) {
 
     if (strcmp(splitted_command[0], "exit") == 0)
     {
+        free(temp_path);
         exit(0);
     }
 
@@ -57,6 +57,7 @@ void call_internal_command(char command[], char current_path[]) {
                     for (int i = tamanho; i >= 0; i--) {
                         if (current_path[i] == '/') {
                             current_path[i] = '\0';
+                            closedir(dir);
                             break;
                         }
                     }
