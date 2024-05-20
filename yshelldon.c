@@ -1,27 +1,6 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <dirent.h>
 #include "internal_commands.h"
 
-char *get_model() {
-    char *model = (char *)malloc(256 * sizeof(char));
-    char *space;
- 
-    FILE *file = fopen("/sys/class/dmi/id/product_name", "r");
-
-    fgets(model, 256, file);
-    model[strcspn(model, "\n")] = '\0';
-
-    while ((space = strchr(model, ' ')) != NULL) {
-        *space = '-';
-    }
-
-    return model;
-}
-
-int main() {
+int main(int argc, char *argv[]) {
     extern char **environ;  //inicializa o ambiente privado
     char atual[1024];
     getcwd(atual,sizeof(atual));    //PEGANDO A PASTA ATUAL COMO PATH
@@ -42,17 +21,46 @@ int main() {
     printf("\033]0;%s\007", title);
 
     clearScreen();
+    do{
+
     for (;;) {
 
-        printUserFormat(current_path);
+       if (argc >= 2)
+            {
+                char line[100];
 
-        fflush(stdin);
-        fgets(command, sizeof(command), stdin);
-        command[strcspn(command, "\n")] = '\0'; //Delete the \n character
-        
-        call_internal_command(command, current_path);
-    }
-    
-    free(current_path);
+                FILE *file = fopen(argv[1], "r");               
+                if (file == NULL) {
+                    printf("fatal error: cannot open file %s", argv[1]);
+                    free(current_path);
+                    return 1;
+                }
+
+                while (fgets(line, sizeof(line), file) != NULL) {
+                    line[strcspn(line, "\n")] = '\0';
+                    //puts(line);
+                    call_internal_command(line, current_path);
+                }
+
+                fclose(file);
+            }
+
+            printUserFormat(current_path);
+
+            if (fgets(command, sizeof(command), stdin) == NULL) {
+                break; 
+            } 
+            else if (strcmp(command, "\n") == 0) {
+                break;
+            } 
+            
+            command[strcspn(command, "\n")] = '\0'; 
+            
+            call_internal_command(command, current_path);
+
+        }
+    } while (strcmp(command, "\n") == 0);
+
+    free(current_path); 
     return 0;   
 }
