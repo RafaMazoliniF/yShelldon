@@ -26,6 +26,7 @@ int main() {
     char atual[1024];
     getcwd(atual,sizeof(atual));    //PEGANDO A PASTA ATUAL COMO PATH
     strcat(atual,"/bin");   //SETANDO O /BIN
+    strcat(atual,":/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin");
     
     setenv("PATH",atual,1);  //seta nosso bin como path
 
