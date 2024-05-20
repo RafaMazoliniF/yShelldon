@@ -1,8 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <dirent.h>
 #include "internal_commands.h"
 
 int main(int argc, char *argv[]) {
@@ -16,18 +11,12 @@ int main(int argc, char *argv[]) {
 
     char title[100];
     char* current_path = (char *)malloc(100 * sizeof(char));
-    if (current_path == NULL) {
-        perror("malloc");
-        exit(EXIT_FAILURE);
-    }
 
     current_path[0] = '\0'; // Initialize the string to avoid undefined behavior
     char home[] = "/home/"; // Seta o path padrão para /home/user
     strcat(current_path, home); 
     strcat(current_path, getlogin());
 
-    system("gcc -o ls ls.c"); //cria o executável do ls
-    system("gcc -o cat cat.c"); //cria o executável do cat
     sprintf(title, "%s@bashinga⚡:~%s", getlogin(), current_path);
     printf("\033]0;%s\007", title);
 
@@ -67,13 +56,7 @@ int main(int argc, char *argv[]) {
             } 
             
             command[strcspn(command, "\n")] = '\0'; 
-
-            if (strcmp(command, "^[[A") == 0) {
-                printf("AAAA");
-            }
-
             
-
             call_internal_command(command, current_path);
 
         }
