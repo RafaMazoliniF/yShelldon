@@ -14,7 +14,7 @@ Este é um simples shell implementado em linguagem C. Ele fornece uma interface 
     ```
     
 ### Execução
-1. **Compilação:** Compile o progrma usando um compilador C compatível, como o GCC
+1. **Compilação:** Compile o programa usando um compilador C compatível, como o GCC
    
    ```
    gcc -o yshell yshelldon.c
@@ -27,7 +27,7 @@ Este é um simples shell implementado em linguagem C. Ele fornece uma interface 
    ```
    b) Executando um arquivo com uma lista de comandos
    ```
-   ./yshell <nome_do_arquiuvo_de_comandos>
+   ./yshell <nome_do_arquivo_de_comandos>
    ```
    
 ### Comandos suportados
