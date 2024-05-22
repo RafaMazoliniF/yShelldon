@@ -16,7 +16,6 @@ void command_ls_a(char* current_path, DIR* diretorio);
 void command_ls_l(char* current_path, DIR* diretorio);
 void command_ls_la(char* current_path, DIR* diretorio);
 
-
 int main(int argc, char *argv[]) {
     char* current_path = argv[1];
     char* arg = (argc > 2) ? argv[2] : NULL;
@@ -28,9 +27,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     
-    // printf("Valor de splitted_command[1]: %s\n", arg);
-    // printf("Valor de splitted_command[2]: %s\n", arg2);
-
     if (arg == NULL || strcmp(arg, "") == 0) {
         command_ls(current_path, diretorio);
     }
@@ -54,9 +50,9 @@ void command_ls(char* current_path, DIR* diretorio) {
     struct stat path_stat;
     int files_count = 0;
     char full_path[1024];
+    int printed_something = 0; // New flag to check if we have printed anything
 
     while ((entrada = readdir(diretorio)) != NULL) {
-        
         snprintf(full_path, sizeof(full_path), "%s/%s", current_path, entrada->d_name);
 
         if (entrada->d_name[0] != '.' && strcmp(entrada->d_name, ".") != 0 && strcmp(entrada->d_name, "..") != 0) {
@@ -64,20 +60,26 @@ void command_ls(char* current_path, DIR* diretorio) {
 
             if (S_ISDIR(path_stat.st_mode)) {
                 printf("\e[1;34m%-*s\e[0m", strlen(entrada->d_name)+3, entrada->d_name);
-                files_count++;
             } else {
                 printf("%-*s", strlen(entrada->d_name)+3, entrada->d_name);
-                files_count++;
             }
+
+            files_count++;
+            printed_something = 1; // Set the flag to true since we printed a file/dir
 
             if (files_count == 5) {
                 printf("\n");
                 files_count = 0; 
+            } else {
+                printf(" ");  // Add space between files
             }
         }
     }
 
-    printf("\n");
+    // Ensure to not add an extra newline if files_count is zero
+    if (printed_something && files_count != 0) {
+        printf("\n");
+    }
 }
 
 void command_ls_a(char* current_path, DIR* diretorio) {
@@ -85,33 +87,38 @@ void command_ls_a(char* current_path, DIR* diretorio) {
     struct stat path_stat;
     int files_count = 0;
     char full_path[1024];
+    int printed_something = 0; // New flag to check if we have printed anything
 
     while ((entrada = readdir(diretorio)) != NULL) {
-        
         snprintf(full_path, sizeof(full_path), "%s/%s", current_path, entrada->d_name); 
         stat(full_path, &path_stat);
 
         if (S_ISDIR(path_stat.st_mode)) {
             printf("\e[1;34m%-*s\e[0m", strlen(entrada->d_name)+3, entrada->d_name);
-            files_count++;
         } else {
             printf("%-*s", strlen(entrada->d_name)+3, entrada->d_name);
-            files_count++;
         }
+
+        files_count++;
+        printed_something = 1; // Set the flag to true since we printed a file/dir
 
         if (files_count == 7) {
             printf("\n");
             files_count = 0; 
+        } else {
+            printf(" ");  // Add space between files
         }
     }
 
-    printf("\n");
+    // Ensure to not add an extra newline if files_count is zero
+    if (printed_something && files_count != 0) {
+        printf("\n");
+    }
 }
 
 void command_ls_l(char* current_path, DIR* diretorio) {
     struct dirent *entrada;
     struct stat path_stat;
-    int files_count = 0;
     char full_path[1024];
     int max_size = 0;
 
@@ -132,7 +139,6 @@ void command_ls_l(char* current_path, DIR* diretorio) {
     rewinddir(diretorio);
 
     while ((entrada = readdir(diretorio)) != NULL) {
-
         snprintf(full_path, sizeof(full_path), "%s/%s", current_path, entrada->d_name); 
 
         if (entrada->d_name[0] != '.' && strcmp(entrada->d_name, ".") != 0 && strcmp(entrada->d_name, "..") != 0) {
@@ -193,7 +199,6 @@ void command_ls_l(char* current_path, DIR* diretorio) {
 void command_ls_la(char* current_path, DIR* diretorio) {
     struct dirent *entrada;
     struct stat path_stat;
-    int files_count = 0;
     char full_path[1024];
     int max_size = 0;
 
@@ -214,7 +219,6 @@ void command_ls_la(char* current_path, DIR* diretorio) {
     rewinddir(diretorio);
 
     while ((entrada = readdir(diretorio)) != NULL) {
-
         snprintf(full_path, sizeof(full_path), "%s/%s", current_path, entrada->d_name); 
 
         stat(full_path, &path_stat);
@@ -269,4 +273,3 @@ void command_ls_la(char* current_path, DIR* diretorio) {
         }
     }
 }
-

@@ -4,7 +4,7 @@
 
 // Clear the entire terminal
 void clearScreen() {
-    printf("\033[H\033[J");  //Clear screen
+    printf("\ec\e[3J");   //Clear screen
 }
 
 //Print the default user format
