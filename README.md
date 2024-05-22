@@ -32,16 +32,24 @@ Este é um simples shell implementado em linguagem C. Ele fornece uma interface 
    
 ### Comandos suportados
 Este shell suporta os comandos:
-- **Entrada em um diretório**
+- **Manipulação do dretório**
   
-   a) Diretório absoluto
+   a) Entrada em um diretório absoluto
    ```
    cd <caminho_completo_do_diretorio>
    ```
-   b) Diretório relativo
+   b) Entrada em um diretório relativo
    ```
    cd <nome_do_diretorio>
    ```
+   c) Retornar ao diretório anterior
+  ```
+  cd ..
+  ```
+  d) Retornar ao diretório root
+  ```
+  cd
+  ```
    
 - **Listagem diretórios e arquivos**
 
