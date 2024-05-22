@@ -17,7 +17,6 @@ int main(int argc, char *argv[]) {
     
     if (argc == 5 && strcmp(argv[2], ">") == 0) {
         char path_dest[100];
-
         sprintf(path_dest, "%s/%s", argv[4], argv[3]); 
 
         FILE *destFile = fopen(path_dest, "wb");

@@ -77,7 +77,7 @@ void command_ls(char* current_path, DIR* diretorio) {
         }
     }
 
-    printf("\n");
+    //printf("\n");
 }
 
 void command_ls_a(char* current_path, DIR* diretorio) {
@@ -105,7 +105,7 @@ void command_ls_a(char* current_path, DIR* diretorio) {
         }
     }
 
-    printf("\n");
+    //printf("\n");
 }
 
 void command_ls_l(char* current_path, DIR* diretorio) {
