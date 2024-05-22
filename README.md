@@ -17,17 +17,17 @@ Este é um simples shell implementado em linguagem C. Ele fornece uma interface 
 1. **Compilação:** Compile o programa usando um compilador C compatível, como o GCC
    
    ```
-   gcc -o yshell yshelldon.c
+   gcc -o yshelldon yshelldon.c
    ```
 2. **Execução:** Com a compilação realizada corretamente, execute o programa da forma desejada
 
    a) Executando o próprio shell
    ```
-   ./yshell
+   ./yshelldon
    ```
    b) Executando um arquivo com uma lista de comandos
    ```
-   ./yshell <nome_do_arquivo_de_comandos>
+   ./yshelldon <nome_do_arquivo_de_comandos.formato>
    ```
    
 ### Comandos suportados
@@ -100,6 +100,11 @@ Este shell suporta os comandos:
 - **Diretório atual**
   ```
   pwd
+  ```
+
+- **Limpeza de tela**
+  ```
+  clear
   ```
   
 - **Saída**
