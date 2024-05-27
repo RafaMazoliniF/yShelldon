@@ -154,7 +154,7 @@ void call_internal_command(char command[], char current_path[]) {
         pid_t pid = fork();
 
         if(pid == 0) {
-            char *args[] = { "./cat", splitted_command[1], splitted_command[2], splitted_command[3], current_path, NULL};
+            char *args[] = { "./cat", current_path, splitted_command[1], splitted_command[2], splitted_command[3], NULL};
             execvp("cat", args);
         }
         else {
