@@ -119,3 +119,11 @@ Este shell suporta os comandos:
   ```
   exit
   ```
+
+  - **Para execução dos binários por fora do Shell**
+  ```
+  // Esteja no diretório dos binários:
+  cd bin
+  ./ls <diretório>
+  ./cat <arquivo>
+  ```
