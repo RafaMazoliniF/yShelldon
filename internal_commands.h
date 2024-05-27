@@ -120,7 +120,7 @@ void call_internal_command(char command[], char current_path[]) {
         }
     }
 
-    else if (strcmp(splitted_command[0], "$path") == 0) {
+    else if (strcmp(splitted_command[0], "path") == 0) {
         printf("usage: $PATH [OPTION]\n\n");
         printf("    -add [directory]     \e[0;33madd\e[0m a directory\n");
         printf("    -rm                  \e[0;33mremove\e[0m the last added directory\n");

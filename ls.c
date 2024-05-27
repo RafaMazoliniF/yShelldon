@@ -17,6 +17,12 @@ void command_ls_l(char* current_path, DIR* diretorio);
 void command_ls_la(char* current_path, DIR* diretorio);
 
 int main(int argc, char *argv[]) {
+    
+    if(argc < 2){
+        fprintf(stderr, "error: ls <directory>\n");
+        return 1;
+    }
+
     char* current_path = argv[1];
     char* arg = (argc > 2) ? argv[2] : NULL;
     char* arg2 = argv[3];

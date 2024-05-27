@@ -57,7 +57,6 @@ int main(int argc, char *argv[]) {
         
         call_internal_command(command, current_path);
     }
-
     free(current_path); 
     return 0;   
 }
